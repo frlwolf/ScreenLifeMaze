@@ -1,5 +1,5 @@
-//
-//  ViewController.swift
+//  
+//  ShowsViewController.swift
 //  ScreenLifeMaze
 //
 //  Created by Felipe Lobo on 13/09/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RootViewController: UITabBarController {
+final class ShowsViewController: UIViewController {
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -20,11 +20,7 @@ final class RootViewController: UITabBarController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		view.backgroundColor = .white
-	}
-
-	func setViewControllers(_ viewControllers: [UIViewController]) {
-		setViewControllers(viewControllers, animated: false)
+		view.backgroundColor = .black.withAlphaComponent(0.2)
 	}
 
 }

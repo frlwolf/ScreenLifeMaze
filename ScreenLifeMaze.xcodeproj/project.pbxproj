@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E90E1DCA75ADDB8104E452F /* ShowsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90EC151144F34A97FFBE0B /* ShowsCoordinator.swift */; };
 		1E90E306154FEC2DCADD9D42 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90EFFCBC804B5881BA2306 /* View.swift */; };
+		1E90E35AE84B4199EEED685E /* ShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E64DB65EC0C5180BE061 /* ShowsViewController.swift */; };
 		1E90E3D0DAD7EFB2D4D31C55 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E09C2B11BB48AC7F67A9 /* RootCoordinator.swift */; };
 		1E90E826209F4E52E50B5708 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E5E821494085E99050EE /* Window.swift */; };
+		1E90ED189B30C35AFCF9954C /* UITabsEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90ED2C467F14E32B65AF81 /* UITabsEmbedder.swift */; };
+		1E90EF65C6C969BA98A14568 /* Embeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90EEC129C16025F0C504A6 /* Embeddable.swift */; };
 		27D7FBF926EFA64900360ADB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D7FBF826EFA64900360ADB /* AppDelegate.swift */; };
 		27D7FBFB26EFA64900360ADB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D7FBFA26EFA64900360ADB /* SceneDelegate.swift */; };
 		27D7FBFD26EFA64900360ADB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D7FBFC26EFA64900360ADB /* RootViewController.swift */; };
@@ -39,6 +43,10 @@
 /* Begin PBXFileReference section */
 		1E90E09C2B11BB48AC7F67A9 /* RootCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		1E90E5E821494085E99050EE /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		1E90E64DB65EC0C5180BE061 /* ShowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsViewController.swift; sourceTree = "<group>"; };
+		1E90EC151144F34A97FFBE0B /* ShowsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsCoordinator.swift; sourceTree = "<group>"; };
+		1E90ED2C467F14E32B65AF81 /* UITabsEmbedder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITabsEmbedder.swift; sourceTree = "<group>"; };
+		1E90EEC129C16025F0C504A6 /* Embeddable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Embeddable.swift; sourceTree = "<group>"; };
 		1E90EFFCBC804B5881BA2306 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		27D7FBF526EFA64900360ADB /* ScreenLifeMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenLifeMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27D7FBF826EFA64900360ADB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +120,10 @@
 				1E90E09C2B11BB48AC7F67A9 /* RootCoordinator.swift */,
 				1E90E5E821494085E99050EE /* Window.swift */,
 				1E90EFFCBC804B5881BA2306 /* View.swift */,
+				1E90EEC129C16025F0C504A6 /* Embeddable.swift */,
+				1E90EC151144F34A97FFBE0B /* ShowsCoordinator.swift */,
+				1E90E64DB65EC0C5180BE061 /* ShowsViewController.swift */,
+				1E90ED2C467F14E32B65AF81 /* UITabsEmbedder.swift */,
 			);
 			path = ScreenLifeMaze;
 			sourceTree = "<group>";
@@ -269,6 +281,10 @@
 				1E90E3D0DAD7EFB2D4D31C55 /* RootCoordinator.swift in Sources */,
 				1E90E826209F4E52E50B5708 /* Window.swift in Sources */,
 				1E90E306154FEC2DCADD9D42 /* View.swift in Sources */,
+				1E90EF65C6C969BA98A14568 /* Embeddable.swift in Sources */,
+				1E90E1DCA75ADDB8104E452F /* ShowsCoordinator.swift in Sources */,
+				1E90E35AE84B4199EEED685E /* ShowsViewController.swift in Sources */,
+				1E90ED189B30C35AFCF9954C /* UITabsEmbedder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
