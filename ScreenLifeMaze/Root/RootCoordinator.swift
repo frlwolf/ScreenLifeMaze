@@ -9,7 +9,13 @@ import Foundation
 
 final class RootCoordinator {
 
+	let session: Session
+
 	var showsCoordinator: ShowsCoordinator?
+
+	init() {
+		session = Session()
+	}
 
 	func start(window: Window) {
 		let view = RootViewController()
@@ -22,7 +28,7 @@ final class RootCoordinator {
 	private func startTabs() -> UITabsEmbedder {
 		let embedder = UITabsEmbedder()
 
-		let showsCoordinator = ShowsCoordinator()
+		let showsCoordinator = ShowsCoordinator(session: session)
 		showsCoordinator.start(embeddable: embedder)
 		self.showsCoordinator = showsCoordinator
 
