@@ -10,10 +10,16 @@ import Combine
 
 protocol ShowsProviding {
 
-	func showsPublisher() -> AnyPublisher<[Show], Error>
+	func showsPublisher() -> AnyPublisher<[Show], ShowsProvidingError>
 
 	func nextPage()
 
+}
+
+enum ShowsProvidingError: Error {
+	case eof
+	case urlError(URLError)
+	case genericError(Error)
 }
 
 final class ShowsProvider {
@@ -21,9 +27,9 @@ final class ShowsProvider {
 	let downloader: ShowsDownloading
 
 	private var cancellables = [AnyCancellable]()
-	private let showsRelay = PassthroughSubject<[Show], Error>()
+	private let showsRelay = PassthroughSubject<[Show], ShowsProvidingError>()
 
-	private var wasEndReached: Bool?
+	private var wasEndReached: Bool = false
 	private var currentPage: Int = 0
 
 	init(downloader: ShowsDownloading) {
@@ -33,18 +39,45 @@ final class ShowsProvider {
 }
 
 extension ShowsProvider: ShowsProviding {
-
-	func showsPublisher() -> AnyPublisher<[Show], Error> {
-		downloader.download(index: currentPage)
-			.subscribe(showsRelay)
-			.store(in: &cancellables)
+	
+	func showsPublisher() -> AnyPublisher<[Show], ShowsProvidingError> {
+		defer { downloadCurrentPage() }
 		return showsRelay.eraseToAnyPublisher()
 	}
 
 	func nextPage() {
+		if wasEndReached {
+			return
+		}
 		currentPage += 1
+		downloadCurrentPage()
+	}
+	
+	private func downloadCurrentPage() {
 		downloader.download(index: currentPage)
-			.subscribe(showsRelay)
+			.mapError { error -> ShowsProvidingError in
+				if let urlError = error as? URLError {
+					if urlError.errorCode == 404 {
+						return .eof
+					}
+					return .urlError(urlError)
+				}
+				return .genericError(error)
+			}
+			.sink(
+				receiveCompletion: { [weak self, showsRelay] completion in
+					guard case .failure(let error) = completion else {
+						return
+					}
+					if case .eof = error {
+						self?.wasEndReached = true
+					}
+					showsRelay.send(completion: completion)
+				},
+				receiveValue: { [showsRelay] shows in
+					showsRelay.send(shows)
+				}
+			)
 			.store(in: &cancellables)
 	}
 

@@ -46,7 +46,11 @@ final class ShowsViewController: UIViewController {
 		setupLayout()
 		
 		viewModel.$shows
-			.sink { [tableView] _ in tableView.reloadData() }
+			.sink { [tableView] _ in
+				DispatchQueue.main.async {
+					tableView.reloadData()
+				}
+			}
 			.store(in: &cancellables)
 		
 		useCase.startLoadingContent()
@@ -55,6 +59,7 @@ final class ShowsViewController: UIViewController {
 	private func setupSubviews() {
 		tableView.register(UITableViewCell.self)
 		tableView.dataSource = dataSource
+		tableView.prefetchDataSource = self
 
 		view.addSubview(tableView)
 	}
@@ -66,6 +71,16 @@ final class ShowsViewController: UIViewController {
 			view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 			view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
 		])
+	}
+
+}
+
+extension ShowsViewController: UITableViewDataSourcePrefetching {
+
+	func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+		if let max = indexPaths.map(\.row).max(), max >= viewModel.shows.count - 10 {
+			useCase.loadNext()
+		}
 	}
 
 }

@@ -6,13 +6,18 @@
 //
 
 import Foundation
+import Combine
 
 protocol ShowsUseCase {
 
 	func startLoadingContent()
 
-	func next()
+	func loadNext()
 
+}
+
+enum ShowsLoadingError: Error {
+	case some
 }
 
 final class ShowsInteractor {
@@ -31,10 +36,12 @@ extension ShowsInteractor: ShowsUseCase {
 
 	func startLoadingContent() {
 		let publisher = provider.showsPublisher()
+			.mapError { _ in ShowsLoadingError.some }
+			.eraseToAnyPublisher()
 		stateAdapter.didLoad(showsPublisher: publisher)
 	}
 
-	func next() {
+	func loadNext() {
 		stateAdapter.willLoadMore()
 		provider.nextPage()
 	}

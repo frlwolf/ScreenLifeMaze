@@ -10,7 +10,7 @@ import Combine
 
 protocol ShowsStateAdapter {
 
-	func didLoad(showsPublisher: AnyPublisher<[Show], Error>)
+	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>)
 
 	func willLoadMore()
 
@@ -39,15 +39,19 @@ final class ShowsState {
 
 extension ShowsState: ShowsStateAdapter {
 
-	func didLoad(showsPublisher: AnyPublisher<[Show], Error>) {
+	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>) {
 		showsPublisher
 			.sink(receiveCompletion: { [transient, persistent] completion in
+				print("Did receive completion")
 				transient.send(.none)
 				guard case .finished = completion, case .partiallyLoaded(let shows) = persistent.value else {
 					return // Unexpected end error handling
 				}
 				persistent.send(.fullyLoaded(shows))
 			}, receiveValue: { [transient, persistent] chunk in
+				
+				print("Did load \(chunk.count) items")
+				
 				transient.send(.receive(chunk: chunk))
 				if case let .partiallyLoaded(loadedSoFar) = persistent.value {
 					persistent.send(.partiallyLoaded(loadedSoFar + chunk))
