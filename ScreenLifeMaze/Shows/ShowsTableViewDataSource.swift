@@ -11,10 +11,10 @@ import Kingfisher
 
 final class ShowsTableViewDataSource: NSObject {
 
-	weak var viewModel: ShowsViewModel!
+	let showsContainer: ShowsContaining
 
-	init(viewModel: ShowsViewModel) {
-		self.viewModel = viewModel
+	init(showsContainer: ShowsContaining) {
+		self.showsContainer = showsContainer
 	}
 
 }
@@ -22,15 +22,20 @@ final class ShowsTableViewDataSource: NSObject {
 extension ShowsTableViewDataSource: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		viewModel?.shows.count ?? 0
+		showsContainer.shows.count
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: ShowsListCell = tableView.dequeueReusableCell(for: indexPath)
+		let show = showsContainer.shows[indexPath.row]
 
-		if let show = viewModel?.shows[indexPath.row] {
-			cell.titleLabel.text = show.name
-			cell.coverImageView.kf.setImage(with: show.image.medium)
+		let cell: ShowsListCell = tableView.dequeueReusableCell(for: indexPath)
+		cell.titleLabel.text = show.name
+		cell.accessoryType = .disclosureIndicator
+
+		if let imageUrl = show.image?.medium {
+			cell.coverImageView.kf.setImage(with: imageUrl)
+		} else {
+			cell.coverImageView.image = nil
 		}
 
 		return cell

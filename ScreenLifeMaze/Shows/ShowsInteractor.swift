@@ -22,10 +22,10 @@ enum ShowsLoadingError: Error {
 
 final class ShowsInteractor {
 
-	let stateAdapter: ShowsStateAdapter
+	let stateAdapter: ShowsStateAdapting
 	let provider: ShowsProviding
 
-	init(provider: ShowsProviding, stateAdapter: ShowsStateAdapter) {
+	init(provider: ShowsProviding, stateAdapter: ShowsStateAdapting) {
 		self.stateAdapter = stateAdapter
 		self.provider = provider
 	}
@@ -36,10 +36,7 @@ extension ShowsInteractor: ShowsUseCase {
 
 	func startLoadingContent() {
 		let publisher = provider.showsPublisher()
-			.mapError { error -> ShowsLoadingError in
-				print(error)
-				return ShowsLoadingError.some
-			}
+			.mapError { _ in ShowsLoadingError.some }
 			.eraseToAnyPublisher()
 		stateAdapter.didLoad(showsPublisher: publisher)
 	}

@@ -30,3 +30,5 @@ final class ShowsViewModel {
 	}
 
 }
+
+extension ShowsViewModel: ShowsContaining { }

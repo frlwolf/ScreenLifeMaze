@@ -12,7 +12,7 @@ final class ShowsListCell: UITableViewCell {
 	let coverImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.backgroundColor = .black
+		imageView.backgroundColor = .gray
 
 		return imageView
 	}()
@@ -50,9 +50,11 @@ final class ShowsListCell: UITableViewCell {
 			titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
 			contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor),
 			contentView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-
-			contentView.heightAnchor.constraint(equalToConstant: 80)
 		])
+		
+		let heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 80)
+		heightConstraint.priority = UILayoutPriority(rawValue: 900)
+		heightConstraint.isActive = true
 	}
 
 }

@@ -11,6 +11,8 @@ final class ShowsCoordinator {
 
 	let session: Session
 
+	var showsSearchCoordinator: ShowsSearchCoordinator?
+
 	init(session: Session) {
 		self.session = session
 	}
@@ -26,7 +28,14 @@ final class ShowsCoordinator {
 		let viewController = ShowsViewController(useCase: interactor, viewModel: viewModel)
 		viewController.title = "Shows"
 
-		embeddable.embed(view: viewController)
+		let navigationController = NavigationController(rootViewController: viewController)
+
+		let showsSearchCoordinator = ShowsSearchCoordinator(session: session)
+		showsSearchCoordinator.start(embeddingInside: viewController)
+
+		embeddable.embed(view: navigationController)
+
+		self.showsSearchCoordinator = showsSearchCoordinator
 	}
 
 }

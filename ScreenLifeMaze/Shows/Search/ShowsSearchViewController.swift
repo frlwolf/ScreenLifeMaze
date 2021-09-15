@@ -1,17 +1,17 @@
 //  
-//  ShowsViewController.swift
+//  ShowsSearchViewController.swift
 //  ScreenLifeMaze
 //
-//  Created by Felipe Lobo on 13/09/21.
+//  Created by Felipe Lobo on 15/09/21.
 //
 
 import UIKit
 import Combine
 
-final class ShowsViewController: UIViewController {
+final class ShowsSearchViewController: UIViewController {
 
-	let useCase: ShowsUseCase
-	let viewModel: ShowsViewModel
+	let useCase: ShowsSearchUseCase
+	let viewModel: ShowsSearchViewModel
 
 	private let tableView: UITableView = {
 		let tableView = UITableView()
@@ -22,8 +22,8 @@ final class ShowsViewController: UIViewController {
 
 	private let dataSource: ShowsTableViewDataSource
 	private var cancellables = [AnyCancellable]()
-
-	init(useCase: ShowsUseCase, viewModel: ShowsViewModel) {
+	
+	init(useCase: ShowsSearchUseCase, viewModel: ShowsSearchViewModel) {
 		self.useCase = useCase
 		self.viewModel = viewModel
 
@@ -32,15 +32,13 @@ final class ShowsViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 	}
 
-	required init?(coder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		preconditionFailure("Please do not instantiate this view controller with init?(coder:)")
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		view.backgroundColor = .black.withAlphaComponent(0.2)
-
+		
 		setupSubviews()
 		setupLayout()
 		
@@ -51,14 +49,11 @@ final class ShowsViewController: UIViewController {
 				}
 			}
 			.store(in: &cancellables)
-		
-		useCase.startLoadingContent()
 	}
-	
+
 	private func setupSubviews() {
 		tableView.register(ShowsListCell.self)
 		tableView.dataSource = dataSource
-		tableView.prefetchDataSource = self
 
 		view.addSubview(tableView)
 	}
@@ -74,11 +69,11 @@ final class ShowsViewController: UIViewController {
 
 }
 
-extension ShowsViewController: UITableViewDataSourcePrefetching {
+extension ShowsSearchViewController: UISearchResultsUpdating {
 
-	func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-		if let max = indexPaths.map(\.row).max(), max >= viewModel.shows.count - 10 {
-			useCase.loadNext()
+	func updateSearchResults(for searchController: UISearchController) {
+		DispatchQueue.main.async { [useCase] in
+			useCase.search(term: searchController.searchBar.text ?? "")
 		}
 	}
 

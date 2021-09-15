@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol ShowsStateAdapter {
+protocol ShowsStateAdapting {
 
 	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>)
 
@@ -37,7 +37,7 @@ final class ShowsState {
 
 }
 
-extension ShowsState: ShowsStateAdapter {
+extension ShowsState: ShowsStateAdapting {
 
 	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>) {
 		showsPublisher

@@ -15,6 +15,6 @@ struct Show: Decodable {
 	}
 
 	let name: String
-	let image: ImageSource
+	let image: ImageSource?
 
 }

@@ -14,6 +14,8 @@ protocol ShowsDownloading {
 
 	func download(index: PageIndex) -> AnyPublisher<[Show], Error>
 
+	func search(query: String) -> AnyPublisher<[Show], Error>
+
 }
 
 struct ShowsDownloader {
@@ -29,6 +31,15 @@ extension ShowsDownloader: ShowsDownloading {
 		return network.session.dataTaskPublisher(for: url)
 			.map(\.data)
 			.decode(type: [Show].self, decoder: JSONDecoder())
+			.eraseToAnyPublisher()
+	}
+
+	func search(query: String) -> AnyPublisher<[Show], Error> {
+		let url = URL(string: "https://api.tvmaze.com/search/shows?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+		return network.session.dataTaskPublisher(for: url)
+			.map(\.data)
+			.decode(type: [ShowsSearchResponse].self, decoder: JSONDecoder())
+			.map { $0.map(\.show) }
 			.eraseToAnyPublisher()
 	}
 
