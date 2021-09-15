@@ -8,9 +8,23 @@
 import Foundation
 import UIKit
 
+protocol ShowsSearchCoordinatorNavigationDelegate: AnyObject {
+
+	func wantsToNavigate(to show: Show)
+
+}
+
+protocol ShowsSearchNavigation: AnyObject {
+
+	func forwardTo(show: Show)
+
+}
+
 final class ShowsSearchCoordinator {
 
 	let session: Session
+
+	weak var navigationDelegate: ShowsSearchCoordinatorNavigationDelegate?
 
 	init(session: Session) {
 		self.session = session
@@ -24,6 +38,7 @@ final class ShowsSearchCoordinator {
 		let interactor = ShowsSearchInteractor(adapter: state, downloader: downloader)
 
 		let viewController = ShowsSearchViewController(useCase: interactor, viewModel: viewModel)
+		viewController.navigation = self
 
 		let searchController = UISearchController(searchResultsController: viewController)
 		searchController.searchResultsUpdater = viewController
@@ -32,8 +47,14 @@ final class ShowsSearchCoordinator {
 
 		parentViewController.definesPresentationContext = true
 		parentViewController.navigationItem.searchController = searchController
+	}
 
-		parentViewController.addChild(viewController)
+}
+
+extension ShowsSearchCoordinator: ShowsSearchNavigation {
+
+	func forwardTo(show: Show) {
+		navigationDelegate?.wantsToNavigate(to: show)
 	}
 
 }

@@ -13,6 +13,8 @@ final class ShowsViewController: UIViewController {
 	let useCase: ShowsUseCase
 	let viewModel: ShowsViewModel
 
+	weak var navigation: ShowsNavigation?
+
 	private let tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,6 +61,7 @@ final class ShowsViewController: UIViewController {
 		tableView.register(ShowsListCell.self)
 		tableView.dataSource = dataSource
 		tableView.prefetchDataSource = self
+		tableView.delegate = self
 
 		view.addSubview(tableView)
 	}
@@ -70,6 +73,17 @@ final class ShowsViewController: UIViewController {
 			view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 			view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
 		])
+	}
+
+}
+
+extension ShowsViewController: UITableViewDelegate {
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: false)
+
+		let show = viewModel.shows[indexPath.row]
+		navigation?.forwardTo(show: show)
 	}
 
 }

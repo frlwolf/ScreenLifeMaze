@@ -13,6 +13,8 @@ final class ShowsSearchViewController: UIViewController {
 	let useCase: ShowsSearchUseCase
 	let viewModel: ShowsSearchViewModel
 
+	weak var navigation: ShowsSearchNavigation?
+
 	private let tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +56,7 @@ final class ShowsSearchViewController: UIViewController {
 	private func setupSubviews() {
 		tableView.register(ShowsListCell.self)
 		tableView.dataSource = dataSource
+		tableView.delegate = self
 
 		view.addSubview(tableView)
 	}
@@ -65,6 +68,17 @@ final class ShowsSearchViewController: UIViewController {
 			view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 			view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
 		])
+	}
+
+}
+
+extension ShowsSearchViewController: UITableViewDelegate {
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: false)
+
+		let show = viewModel.shows[indexPath.row]
+		navigation?.forwardTo(show: show)
 	}
 
 }
