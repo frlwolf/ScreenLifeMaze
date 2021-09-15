@@ -47,9 +47,7 @@ final class ShowsViewController: UIViewController {
 		
 		viewModel.$shows
 			.sink { [tableView] _ in
-				DispatchQueue.main.async {
-					tableView.reloadData()
-				}
+				DispatchQueue.main.async(execute: tableView.reloadData)
 			}
 			.store(in: &cancellables)
 		
@@ -57,7 +55,7 @@ final class ShowsViewController: UIViewController {
 	}
 
 	private func setupSubviews() {
-		tableView.register(UITableViewCell.self)
+		tableView.register(ShowsListCell.self)
 		tableView.dataSource = dataSource
 		tableView.prefetchDataSource = self
 

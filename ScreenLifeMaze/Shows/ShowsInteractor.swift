@@ -36,7 +36,10 @@ extension ShowsInteractor: ShowsUseCase {
 
 	func startLoadingContent() {
 		let publisher = provider.showsPublisher()
-			.mapError { _ in ShowsLoadingError.some }
+			.mapError { error -> ShowsLoadingError in
+				print(error)
+				return ShowsLoadingError.some
+			}
 			.eraseToAnyPublisher()
 		stateAdapter.didLoad(showsPublisher: publisher)
 	}

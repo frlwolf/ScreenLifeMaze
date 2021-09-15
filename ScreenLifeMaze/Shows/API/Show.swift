@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct Show: Codable {
+struct Show: Decodable {
+
+	struct ImageSource: Decodable {
+		let medium: URL
+		let original: URL
+	}
 
 	let name: String
+	let image: ImageSource
 
 }
