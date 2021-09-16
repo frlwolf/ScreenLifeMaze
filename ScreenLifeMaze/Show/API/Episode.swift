@@ -13,4 +13,6 @@ struct Episode: Decodable {
 	let name: String
 	let season: Int
 
+	let image: ImageSource?
+
 }

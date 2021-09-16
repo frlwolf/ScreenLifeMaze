@@ -32,6 +32,8 @@ final class ShowsViewController: UIViewController {
 		dataSource = ShowsTableViewDataSource(showsContainer: viewModel)
 
 		super.init(nibName: nil, bundle: nil)
+		
+		tabBarItem.image = UIImage(named: "TVIcon")
 	}
 
 	required init?(coder: NSCoder) {
@@ -40,9 +42,7 @@ final class ShowsViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		view.backgroundColor = .black.withAlphaComponent(0.2)
-
+			
 		setupSubviews()
 		setupLayout()
 		

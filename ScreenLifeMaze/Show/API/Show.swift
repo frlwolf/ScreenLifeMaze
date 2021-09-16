@@ -9,11 +9,6 @@ import Foundation
 
 struct Show: Decodable {
 
-	struct ImageSource: Decodable {
-		let medium: URL
-		let original: URL
-	}
-
 	struct Schedule: Decodable {
 		let time: String
 		let days: [String]

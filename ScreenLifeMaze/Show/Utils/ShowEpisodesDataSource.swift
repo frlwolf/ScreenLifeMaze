@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 protocol EpisodesContaining {
 
@@ -66,7 +67,19 @@ extension ShowEpisodesDataSource: UITableViewDataSource {
 		let section = sections[indexPath.section]
 		let episode = section[indexPath.row]
 		cell.textLabel?.text = episode.name
+		cell.textLabel?.adjustsFontSizeToFitWidth = true
+		cell.textLabel?.minimumScaleFactor = 0.7
+
+		if let imageURL = episode.image?.medium {
+			cell.imageView?.kf.setImage(with: imageURL) { [weak cell] _ in
+				cell?.setNeedsLayout()
+				cell?.layoutIfNeeded()
+			}
+		} else {
+			cell.imageView?.image = nil
+		}
 
 		return cell
 	}
+
 }
