@@ -64,6 +64,8 @@ extension ShowEpisodesDataSource: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: UITableViewCell = tableView.dequeueReusableCell(for: indexPath)
 
+		cell.selectionStyle = .none
+
 		let section = sections[indexPath.section]
 		let episode = section[indexPath.row]
 		cell.textLabel?.text = episode.name
