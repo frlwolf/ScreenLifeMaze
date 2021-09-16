@@ -17,9 +17,17 @@ final class ShowCoverView: UIView {
 		verticalStackView.distribution = .fill
 		verticalStackView.alignment = .fill
 		verticalStackView.axis = .vertical
-		verticalStackView.spacing = 12
+		verticalStackView.spacing = 8
 
 		return verticalStackView
+	}()
+
+	private let coverBackgroundView: UIView = {
+		let coverBackgroundView = UIView()
+		coverBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+		coverBackgroundView.backgroundColor = .secondarySystemBackground
+
+		return coverBackgroundView
 	}()
 
 	private let coverImageView: UIImageView = {
@@ -33,7 +41,8 @@ final class ShowCoverView: UIView {
 	private let titleLabel: UILabel = {
 		let titleLabel = UILabel()
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
-		titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+		titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+		titleLabel.textColor = .label
 		titleLabel.numberOfLines = 0
 
 		return titleLabel
@@ -50,12 +59,14 @@ final class ShowCoverView: UIView {
 	private let tagsLabel: UILabel = {
 		let tagsLabel = UILabel()
 		tagsLabel.translatesAutoresizingMaskIntoConstraints = false
-		tagsLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+		tagsLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 		tagsLabel.textColor = .secondaryLabel
 
 		return tagsLabel
 	}()
 
+	private var summaryHeightConstraint: NSLayoutConstraint?
+	
 	init() {
 		super.init(frame: .zero)
 
@@ -69,8 +80,18 @@ final class ShowCoverView: UIView {
 		preconditionFailure("Please do not instantiate this view with init?(coder:)")
 	}
 
-	func update(show: Show) {
-		coverImageView.kf.setImage(with: show.image.original)
+	func update(show: Show, containerViewSize: CGSize) {
+		coverImageView.kf.setImage(with: show.image.original) { [unowned self, coverBackgroundView] result in
+			if case .success(let imageResult) = result {
+				let mainColors = imageResult.image.mainColors()
+
+				if let topColor = mainColors.last {
+					let oneBeforeLast = max(0, mainColors.count - 2)
+					backgroundColor	= mainColors[oneBeforeLast].withAlphaComponent(0.2)
+					coverBackgroundView.backgroundColor = topColor
+				}
+			}
+		}
 
 		titleLabel.text = show.name
 
@@ -80,32 +101,78 @@ final class ShowCoverView: UIView {
 			documentAttributes: nil
 		) {
 			let length = attributedString.length
-			attributedString.setAttributes([.font: UIFont.systemFont(ofSize: 14)], range: NSRange(location: 0, length: length))
-	
+			attributedString.setAttributes(
+				[.font: UIFont.preferredFont(forTextStyle: .body),
+				 .foregroundColor: UIColor.label],
+				range: NSRange(location: 0, length: length)
+			)
+
+			let height = height(forAttributedText: attributedString, containedIn: containerViewSize)
+			
+			summaryHeightConstraint?.constant = height
+			summaryHeightConstraint?.isActive = true
+
 			summaryLabel.attributedText = attributedString
 		}
 
 		tagsLabel.text = show.genres.joined(separator: ", ")
+		tagsLabel.isHidden = show.genres.count == 0
 	}
 
 	private func setupSubviews() {
-		verticalStackView.addArrangedSubview(coverImageView)
+		addSubview(coverBackgroundView)
+		addSubview(coverImageView)
+
 		verticalStackView.addArrangedSubview(titleLabel)
-		verticalStackView.addArrangedSubview(summaryLabel)
 		verticalStackView.addArrangedSubview(tagsLabel)
+		verticalStackView.addArrangedSubview(summaryLabel)
 
 		addSubview(verticalStackView)
 	}
 
 	private func setupLayout() {
-		coverImageView.heightAnchor.constraint(equalToConstant: 320).isActive = true
+		coverBackgroundView.heightAnchor.constraint(equalToConstant: 320).isActive = true
+		
+		let summaryHeightConstraint = summaryLabel.heightAnchor.constraint(equalToConstant: 0)
+		summaryHeightConstraint.isActive = false
+		
+		self.summaryHeightConstraint = summaryHeightConstraint
 
 		addConstraints([
-			verticalStackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+			coverImageView.topAnchor.constraint(equalTo: topAnchor),
+			coverImageView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+			coverImageView.bottomAnchor.constraint(equalTo: coverBackgroundView.bottomAnchor),
+			layoutMarginsGuide.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+
+			coverBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+			coverBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			trailingAnchor.constraint(equalTo: coverBackgroundView.trailingAnchor),
+
+			verticalStackView.topAnchor.constraint(equalTo: coverBackgroundView.bottomAnchor, constant: 16),
 			verticalStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
 			layoutMarginsGuide.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-			layoutMarginsGuide.bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 8)
+			bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 8)
 		])
+	}
+
+	private func height(forAttributedText attrString: NSAttributedString, containedIn size: CGSize) -> CGFloat {
+		let textContainer = NSTextContainer()
+		textContainer.lineBreakMode = .byWordWrapping
+		textContainer.lineFragmentPadding = 0
+		textContainer.size = CGSize(width: size.width, height: .greatestFiniteMagnitude)
+
+		let layoutManager = NSLayoutManager()
+		layoutManager.addTextContainer(textContainer)
+
+		let textStorage = NSTextStorage()
+		textStorage.addLayoutManager(layoutManager)
+		textStorage.setAttributedString(attrString)
+
+		layoutManager.ensureLayout(for: textContainer)
+
+		let rect = layoutManager.usedRect(for: textContainer)
+
+		return rect.height
 	}
 
 }

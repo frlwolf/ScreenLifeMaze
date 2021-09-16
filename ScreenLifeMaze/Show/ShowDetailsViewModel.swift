@@ -18,14 +18,12 @@ final class ShowDetailsViewModel {
 
 	init(observing state: ShowDetailsState) {
 		state.persistent
-			.map { persistent -> Show? in
+			.compactMap { persistent -> Show? in
 				switch persistent {
-				case .empty:
-					return nil
 				case .loaded(let show):
 					return show
-				case .loadedEpisodes(let show, _):
-					return show
+				default:
+					return nil
 				}
 			}
 			.receive(on: DispatchQueue.main)

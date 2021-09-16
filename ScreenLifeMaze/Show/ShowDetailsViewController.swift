@@ -86,10 +86,15 @@ final class ShowDetailsViewController: UIViewController {
 	}
 
 	private func updateHeader(show: Show) {
-		coverView.update(show: show)
+		let horizontalWidth = tableView.frame.width - tableView.layoutMargins.right - tableView.layoutMargins.left
+		
+		print("TableView size of \(tableView.frame.size)")
+		print("Horizontal width of \(horizontalWidth)")
+		
+		coverView.update(show: show, containerViewSize: CGSize(width: horizontalWidth, height: tableView.frame.height))
 		coverView.layoutIfNeeded()
-
-		let height = coverView.systemLayoutSizeFitting(CGSize(width: tableView.frame.width, height: 0)).height
+		
+		let height = coverView.systemLayoutSizeFitting(CGSize(width: horizontalWidth, height: 0)).height
 		let headerContainer = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.frame.width, height: height)))
 
 		headerContainer.addSubview(coverView)
@@ -100,8 +105,10 @@ final class ShowDetailsViewController: UIViewController {
 			headerContainer.bottomAnchor.constraint(equalTo: coverView.bottomAnchor)
 		])
 		headerContainer.preservesSuperviewLayoutMargins = true
-
+		
 		tableView.tableHeaderView = headerContainer
+		
+		headerContainer.layoutIfNeeded()
 	}
 
 }

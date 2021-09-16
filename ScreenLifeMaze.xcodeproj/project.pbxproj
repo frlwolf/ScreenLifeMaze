@@ -11,6 +11,7 @@
 		1E90E1B8624EC42089BCE5AD /* ShowDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E515DE4D612F9C64FB2D /* ShowDetailsCoordinator.swift */; };
 		1E90E1EABE0344D130148BD1 /* ShowsSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E8E059C3B0CAE36F80EA /* ShowsSearchCoordinator.swift */; };
 		1E90E1F769F637EA1702781B /* Embeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E16C700054A9657D55B1 /* Embeddable.swift */; };
+		1E90E1F88AABD801A52E5528 /* UIImage+FrequentColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E4976026963E6CD0F59D /* UIImage+FrequentColors.m */; };
 		1E90E24A43C1CC1DFB05F424 /* ShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E71834FA5F37D7E60B85 /* ShowsViewController.swift */; };
 		1E90E280043072AE1F4E5E3D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E28E6EBC2517AB24F60E /* Window.swift */; };
 		1E90E28913F851AE396FFA92 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E90E122ECBFFEF20AF7FBA6 /* Show.swift */; };
@@ -84,6 +85,7 @@
 		1E90E28E6EBC2517AB24F60E /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		1E90E343F6686C3BAB997D72 /* ShowsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsTableViewDataSource.swift; sourceTree = "<group>"; };
 		1E90E3ACDAADEEE924902B50 /* ShowsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsViewModel.swift; sourceTree = "<group>"; };
+		1E90E4976026963E6CD0F59D /* UIImage+FrequentColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FrequentColors.m"; sourceTree = "<group>"; };
 		1E90E4E75FDEE28B115C2EC1 /* Navigable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigable.swift; sourceTree = "<group>"; };
 		1E90E515DE4D612F9C64FB2D /* ShowDetailsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetailsCoordinator.swift; sourceTree = "<group>"; };
 		1E90E535E45311279615E8CF /* ShowsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsState.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		1E90E5EEFAC3C3FB7AFD60F5 /* ShowsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsCoordinator.swift; sourceTree = "<group>"; };
 		1E90E63152722794648A0425 /* RootCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		1E90E65AE0BA00EC5736CF60 /* ShowsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsSearchViewController.swift; sourceTree = "<group>"; };
+		1E90E6EAD0FE5106B306E989 /* UIImage+FrequentColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FrequentColors.h"; sourceTree = "<group>"; };
 		1E90E71834FA5F37D7E60B85 /* ShowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsViewController.swift; sourceTree = "<group>"; };
 		1E90E7FAF792CA7B2365C665 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1E90E8E059C3B0CAE36F80EA /* ShowsSearchCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsSearchCoordinator.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		1E90EEC31213EE5D4C641912 /* ShowsListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsListCell.swift; sourceTree = "<group>"; };
 		1E90EECD875BCFC833E27399 /* ShowDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetailsViewController.swift; sourceTree = "<group>"; };
 		1E90EFA05B770C69CEAD7C96 /* NetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
+		279EBED126F3A08E00C8E659 /* ScreenLifeMaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScreenLifeMaze-Bridging-Header.h"; sourceTree = "<group>"; };
 		27D7FBF526EFA64900360ADB /* ScreenLifeMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenLifeMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27D7FC0126EFA64900360ADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27D7FC0426EFA64900360ADB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -157,13 +161,15 @@
 		1E90E122A8CE54F04689913D /* Show */ = {
 			isa = PBXGroup;
 			children = (
-				1E90E515DE4D612F9C64FB2D /* ShowDetailsCoordinator.swift */,
-				1E90EECD875BCFC833E27399 /* ShowDetailsViewController.swift */,
-				1E90EEA803B9FC0557FB756C /* ShowDetailsState.swift */,
-				1E90EB1930F01999B800849F /* ShowDetailsViewModel.swift */,
-				1E90EB72953799B886908E70 /* ShowDetailsInteractor.swift */,
-				1E90EF828C567B9D2DDCF843 /* API */,
+				1E90E6EAD0FE5106B306E989 /* UIImage+FrequentColors.h */,
+				1E90E4976026963E6CD0F59D /* UIImage+FrequentColors.m */,
 				1E90E12978BF8EC83EDCC499 /* ShowCoverView.swift */,
+				1E90E515DE4D612F9C64FB2D /* ShowDetailsCoordinator.swift */,
+				1E90EB72953799B886908E70 /* ShowDetailsInteractor.swift */,
+				1E90EEA803B9FC0557FB756C /* ShowDetailsState.swift */,
+				1E90EECD875BCFC833E27399 /* ShowDetailsViewController.swift */,
+				1E90EB1930F01999B800849F /* ShowDetailsViewModel.swift */,
+				1E90EF828C567B9D2DDCF843 /* API */,
 				1E90E169E90D905BF9349202 /* Utils */,
 			);
 			path = Show;
@@ -310,6 +316,7 @@
 				1E90E558E0939FDBDD805276 /* UITableView+Extensions.swift */,
 				1E90E7FAF792CA7B2365C665 /* NavigationController.swift */,
 				1E90E122A8CE54F04689913D /* Show */,
+				279EBED126F3A08E00C8E659 /* ScreenLifeMaze-Bridging-Header.h */,
 			);
 			path = ScreenLifeMaze;
 			sourceTree = "<group>";
@@ -509,6 +516,7 @@
 				1E90E7B699C4AAB3AC7D43D5 /* ShowCoverView.swift in Sources */,
 				1E90E7FEE3B4649446C50D7F /* ShowEpisodesDataSource.swift in Sources */,
 				1E90ECD11646660F4D08EBB3 /* ImageSource.swift in Sources */,
+				1E90E1F88AABD801A52E5528 /* UIImage+FrequentColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +620,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "ScreenLifeMaze/ScreenLifeMaze-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -666,6 +675,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "ScreenLifeMaze/ScreenLifeMaze-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
