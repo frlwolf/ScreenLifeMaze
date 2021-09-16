@@ -16,10 +16,6 @@ protocol ShowsUseCase {
 
 }
 
-enum ShowsLoadingError: Error {
-	case some
-}
-
 final class ShowsInteractor {
 
 	let stateAdapter: ShowsStateAdapting
@@ -36,7 +32,7 @@ extension ShowsInteractor: ShowsUseCase {
 
 	func startLoadingContent() {
 		let publisher = provider.showsPublisher()
-			.mapError { _ in ShowsLoadingError.some }
+			.mapError { $0 as Error }
 			.eraseToAnyPublisher()
 		stateAdapter.didLoad(showsPublisher: publisher)
 	}

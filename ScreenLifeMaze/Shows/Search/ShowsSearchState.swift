@@ -10,7 +10,7 @@ import Combine
 
 protocol ShowsSearchStateAdapting {
 
-	func didSearch(results: AnyPublisher<[Show], Never>)
+	func didSearch(results: AnyPublisher<[Show.Index], Never>)
 
 }
 
@@ -18,7 +18,7 @@ final class ShowsSearchState {
 
 	enum Persistent {
 		case empty
-		case resultsFound([Show])
+		case resultsFound([Show.Index])
 	}
 
 	enum Transient {
@@ -35,7 +35,7 @@ final class ShowsSearchState {
 
 extension ShowsSearchState: ShowsSearchStateAdapting {
 
-	func didSearch(results: AnyPublisher<[Show], Never>) {
+	func didSearch(results: AnyPublisher<[Show.Index], Never>) {
 		transient.send(.loading)
 		results.sink { [persistent, transient] shows in
 			transient.send(.none)

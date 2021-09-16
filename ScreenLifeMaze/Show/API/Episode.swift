@@ -1,5 +1,5 @@
 //  
-//  ShowsContainer.swift
+//  Episode.swift
 //  ScreenLifeMaze
 //
 //  Created by Felipe Lobo on 15/09/21.
@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol ShowsContaining {
+struct Episode: Decodable {
 
-	var shows: [Show.Index] { get }
+	let id: Int
+	let name: String
 
 }

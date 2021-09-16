@@ -20,6 +20,8 @@ final class ShowsListCell: UITableViewCell {
 	let titleLabel: UILabel = {
 		let titleLabel = UILabel()
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		titleLabel.numberOfLines = 0
+
 		return titleLabel
 	}()
 

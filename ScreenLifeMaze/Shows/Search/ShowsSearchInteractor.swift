@@ -30,7 +30,7 @@ extension ShowsSearchInteractor: ShowsSearchUseCase {
 
 	func search(term: String) {
 		let publisher = downloader.search(query: term)
-			.catch { error -> Just<[Show]> in
+			.catch { error -> Just<[Show.Index]> in
 				print(error)
 				return Just([])
 			}

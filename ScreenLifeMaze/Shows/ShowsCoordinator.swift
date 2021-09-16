@@ -9,7 +9,7 @@ import Foundation
 
 protocol ShowsNavigation: AnyObject {
 
-	func forwardTo(show: Show)
+	func forwardTo(show: Show.Index)
 
 }
 
@@ -54,7 +54,7 @@ final class ShowsCoordinator {
 
 extension ShowsCoordinator: ShowsNavigation {
 
-	func forwardTo(show: Show) {
+	func forwardTo(show: Show.Index) {
 		guard let navigationController = navigationController else { return }
 		
 		let showDetailsCoordinator = ShowDetailsCoordinator(show: show, session: session)
@@ -67,7 +67,7 @@ extension ShowsCoordinator: ShowsNavigation {
 
 extension ShowsCoordinator: ShowsSearchCoordinatorNavigationDelegate {
 
-	func wantsToNavigate(to show: Show) {
+	func wantsToNavigate(to show: Show.Index) {
 		forwardTo(show: show)
 	}
 

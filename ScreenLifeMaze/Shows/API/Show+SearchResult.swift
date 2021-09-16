@@ -7,9 +7,11 @@
 
 import Foundation
 
-struct ShowsSearchResponse: Decodable {
+extension Show {
 
-	let score: Double
-	let show: Show
+	struct SearchResult: Decodable {
+		let score: Double
+		let show: Index
+	}
 
 }

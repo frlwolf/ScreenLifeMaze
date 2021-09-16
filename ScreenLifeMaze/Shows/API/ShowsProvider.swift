@@ -10,7 +10,7 @@ import Combine
 
 protocol ShowsProviding {
 
-	func showsPublisher() -> AnyPublisher<[Show], ShowsProvidingError>
+	func showsPublisher() -> AnyPublisher<[Show.Index], ShowsProvidingError>
 
 	func nextPage()
 
@@ -27,7 +27,7 @@ final class ShowsProvider {
 	let downloader: ShowsDownloading
 
 	private var cancellables = [AnyCancellable]()
-	private let showsRelay = PassthroughSubject<[Show], ShowsProvidingError>()
+	private let showsRelay = PassthroughSubject<[Show.Index], ShowsProvidingError>()
 
 	private var wasEndReached: Bool = false
 	private var currentPage: Int = 0
@@ -40,7 +40,7 @@ final class ShowsProvider {
 
 extension ShowsProvider: ShowsProviding {
 	
-	func showsPublisher() -> AnyPublisher<[Show], ShowsProvidingError> {
+	func showsPublisher() -> AnyPublisher<[Show.Index], ShowsProvidingError> {
 		defer { downloadCurrentPage() }
 		return showsRelay.eraseToAnyPublisher()
 	}

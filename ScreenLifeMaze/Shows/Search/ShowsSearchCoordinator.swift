@@ -10,13 +10,13 @@ import UIKit
 
 protocol ShowsSearchCoordinatorNavigationDelegate: AnyObject {
 
-	func wantsToNavigate(to show: Show)
+	func wantsToNavigate(to show: Show.Index)
 
 }
 
 protocol ShowsSearchNavigation: AnyObject {
 
-	func forwardTo(show: Show)
+	func forwardTo(show: Show.Index)
 
 }
 
@@ -53,7 +53,7 @@ final class ShowsSearchCoordinator {
 
 extension ShowsSearchCoordinator: ShowsSearchNavigation {
 
-	func forwardTo(show: Show) {
+	func forwardTo(show: Show.Index) {
 		navigationDelegate?.wantsToNavigate(to: show)
 	}
 

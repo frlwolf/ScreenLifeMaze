@@ -11,7 +11,7 @@ import Combine
 final class ShowsSearchViewModel {
 
 	@Published(initialValue: [])
-	var shows: [Show]
+	var shows: [Show.Index]
 
 	init(observing state: ShowsSearchState) {
 		state.persistent

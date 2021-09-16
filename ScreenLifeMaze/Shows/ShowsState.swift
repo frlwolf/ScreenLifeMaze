@@ -10,7 +10,7 @@ import Combine
 
 protocol ShowsStateAdapting {
 
-	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>)
+	func didLoad(showsPublisher: AnyPublisher<[Show.Index], Error>)
 
 	func willLoadMore()
 
@@ -20,14 +20,14 @@ final class ShowsState {
 
 	enum Persistent {
 		case empty
-		case partiallyLoaded([Show])
-		case fullyLoaded([Show])
+		case partiallyLoaded([Show.Index])
+		case fullyLoaded([Show.Index])
 	}
 
 	enum Transient {
 		case none
 		case loading
-		case receive(chunk: [Show])
+		case receive(chunk: [Show.Index])
 	}
 
 	let persistent = CurrentValueSubject<Persistent, Never>(.empty)
@@ -39,7 +39,7 @@ final class ShowsState {
 
 extension ShowsState: ShowsStateAdapting {
 
-	func didLoad(showsPublisher: AnyPublisher<[Show], ShowsLoadingError>) {
+	func didLoad(showsPublisher: AnyPublisher<[Show.Index], Error>) {
 		showsPublisher
 			.sink(receiveCompletion: { [transient, persistent] completion in
 				print("Did receive completion")
