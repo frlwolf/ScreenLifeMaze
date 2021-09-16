@@ -43,3 +43,5 @@ final class ShowDetailsViewModel {
 	}
 
 }
+
+extension ShowDetailsViewModel: EpisodesContaining { }

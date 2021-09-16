@@ -28,11 +28,14 @@ final class ShowDetailsViewController: UIViewController {
 		return coverView
 	}()
 
+	private let dataSource: ShowEpisodesDataSource
 	private var cancellables = [AnyCancellable]()
 
 	init(useCase: ShowDetailsUseCase, viewModel: ShowDetailsViewModel) {
 		self.useCase = useCase
 		self.viewModel = viewModel
+		
+		dataSource = ShowEpisodesDataSource(episodesContainer: viewModel)
 
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -55,7 +58,12 @@ final class ShowDetailsViewController: UIViewController {
 			.store(in: &cancellables)
 
 		viewModel.$episodes
-			.sink { [tableView] _ in DispatchQueue.main.async(execute: tableView.reloadData) }
+			.sink { [tableView, dataSource] _ in
+				DispatchQueue.main.async {
+					dataSource.rebuildSections()
+					tableView.reloadData()
+				}
+			}
 			.store(in: &cancellables)
 		
 		useCase.loadContent()
@@ -63,7 +71,7 @@ final class ShowDetailsViewController: UIViewController {
 
 	private func setupSubviews() {
 		tableView.register(UITableViewCell.self)
-		tableView.dataSource = self
+		tableView.dataSource = dataSource
 
 		view.addSubview(tableView)
 	}
@@ -94,23 +102,6 @@ final class ShowDetailsViewController: UIViewController {
 		headerContainer.preservesSuperviewLayoutMargins = true
 
 		tableView.tableHeaderView = headerContainer
-	}
-
-}
-
-extension ShowDetailsViewController: UITableViewDataSource {
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		viewModel.episodes.count
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: UITableViewCell = tableView.dequeueReusableCell(for: indexPath)
-
-		let episode = viewModel.episodes[indexPath.row]
-		cell.textLabel?.text = episode.name
-
-		return cell
 	}
 
 }
