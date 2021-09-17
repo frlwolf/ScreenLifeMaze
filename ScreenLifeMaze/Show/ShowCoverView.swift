@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Kingfisher
+import UIImageColors
 
 final class ShowCoverView: UIView {
 
@@ -20,6 +21,23 @@ final class ShowCoverView: UIView {
 		verticalStackView.spacing = 8
 
 		return verticalStackView
+	}()
+
+	private let backgroundImageView: UIImageView = {
+		let backgroundImageView = UIImageView()
+		backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+		backgroundImageView.clipsToBounds = true
+
+		return backgroundImageView
+	}()
+
+	private let backgroundVisualEffectView: UIVisualEffectView = {
+		let blurEffect = UIBlurEffect(style: .systemMaterial)
+		let backgroundVisualEffectView = UIVisualEffectView(effect: blurEffect)
+		backgroundVisualEffectView.translatesAutoresizingMaskIntoConstraints = false
+		backgroundVisualEffectView.contentMode = .scaleAspectFill
+
+		return backgroundVisualEffectView
 	}()
 
 	private let coverBackgroundView: UIView = {
@@ -81,15 +99,21 @@ final class ShowCoverView: UIView {
 	}
 
 	func update(show: Show, containerViewSize: CGSize) {
-		coverImageView.kf.setImage(with: show.image.original) { [unowned self, coverBackgroundView] result in
-			if case .success(let imageResult) = result {
-				let mainColors = imageResult.image.mainColors()
-
-				if let topColor = mainColors.last {
-					let oneBeforeLast = max(0, mainColors.count - 2)
-					backgroundColor	= mainColors[oneBeforeLast].withAlphaComponent(0.2)
-					coverBackgroundView.backgroundColor = topColor
+		coverImageView.kf.setImage(with: show.image.original) { [unowned self] result in
+			if case .success(let imageResult) = result, let colors = imageResult.image.getColors() {
+				backgroundImageView.image = imageResult.image
+				
+				if colors.secondary.contrast > 125 {
+					backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialDark)
+				} else {
+					backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialLight)
 				}
+				
+				backgroundColor	= colors.background
+				coverBackgroundView.backgroundColor = colors.background
+				titleLabel.textColor = colors.primary
+				tagsLabel.textColor = colors.detail
+				summaryLabel.textColor = colors.secondary
 			}
 		}
 
@@ -102,8 +126,7 @@ final class ShowCoverView: UIView {
 		) {
 			let length = attributedString.length
 			attributedString.setAttributes(
-				[.font: UIFont.preferredFont(forTextStyle: .body),
-				 .foregroundColor: UIColor.label],
+				[.font: UIFont.preferredFont(forTextStyle: .body)],
 				range: NSRange(location: 0, length: length)
 			)
 
@@ -120,6 +143,9 @@ final class ShowCoverView: UIView {
 	}
 
 	private func setupSubviews() {
+		addSubview(backgroundImageView)
+		addSubview(backgroundVisualEffectView)
+
 		addSubview(coverBackgroundView)
 		addSubview(coverImageView)
 
@@ -138,11 +164,24 @@ final class ShowCoverView: UIView {
 		
 		self.summaryHeightConstraint = summaryHeightConstraint
 
+		titleLabel.setContentHuggingPriority(.required, for: .vertical)
+		tagsLabel.setContentHuggingPriority(.required, for: .vertical)
+
 		addConstraints([
+			backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+			backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+			backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+			backgroundVisualEffectView.topAnchor.constraint(equalTo: topAnchor),
+			backgroundVisualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			backgroundVisualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+			backgroundVisualEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
 			coverImageView.topAnchor.constraint(equalTo: topAnchor),
-			coverImageView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+			coverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			coverImageView.bottomAnchor.constraint(equalTo: coverBackgroundView.bottomAnchor),
-			layoutMarginsGuide.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+			trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
 
 			coverBackgroundView.topAnchor.constraint(equalTo: topAnchor),
 			coverBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
