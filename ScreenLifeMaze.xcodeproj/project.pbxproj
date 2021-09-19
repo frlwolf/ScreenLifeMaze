@@ -120,7 +120,6 @@
 		1E90EECD875BCFC833E27399 /* ShowDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetailsViewController.swift; sourceTree = "<group>"; };
 		1E90EF19305E4F8FA4285EBF /* UIColor+Contrast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Contrast.swift"; sourceTree = "<group>"; };
 		1E90EFA05B770C69CEAD7C96 /* NetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
-		279EBED126F3A08E00C8E659 /* ScreenLifeMaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScreenLifeMaze-Bridging-Header.h"; sourceTree = "<group>"; };
 		27D7FBF526EFA64900360ADB /* ScreenLifeMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenLifeMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27D7FC0126EFA64900360ADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27D7FC0426EFA64900360ADB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -323,7 +322,6 @@
 				1E90ED0DEB2102717A4713AC /* Shows */,
 				1E90E7FAF792CA7B2365C665 /* NavigationController.swift */,
 				1E90E122A8CE54F04689913D /* Show */,
-				279EBED126F3A08E00C8E659 /* ScreenLifeMaze-Bridging-Header.h */,
 				2767A96326F50768008137BC /* Extensions */,
 			);
 			path = ScreenLifeMaze;
@@ -630,7 +628,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "ScreenLifeMaze/ScreenLifeMaze-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -685,7 +682,6 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "ScreenLifeMaze/ScreenLifeMaze-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
