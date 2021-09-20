@@ -100,20 +100,10 @@ final class ShowCoverView: UIView {
 
 	func update(show: Show, containerViewSize: CGSize) {
 		coverImageView.kf.setImage(with: show.image.original) { [unowned self] result in
-			if case .success(let imageResult) = result, let colors = imageResult.image.getColors() {
-				backgroundImageView.image = imageResult.image
-				
-				if colors.secondary.contrast > 125 {
-					backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialDark)
-				} else {
-					backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialLight)
-				}
-				
-				backgroundColor	= colors.background
-				coverBackgroundView.backgroundColor = colors.background
-				titleLabel.textColor = colors.primary
-				tagsLabel.textColor = colors.detail
-				summaryLabel.textColor = colors.secondary
+			if case .success(let imageResult) = result {
+				let image = imageResult.image
+				backgroundImageView.image = image
+				updateColors(derivingFrom: image)
 			}
 		}
 
@@ -192,6 +182,25 @@ final class ShowCoverView: UIView {
 			layoutMarginsGuide.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
 			bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 8)
 		])
+	}
+
+	private func updateColors(derivingFrom image: UIImage) {
+		guard let colors = image.getColors() else {
+			debugPrint("Couldn't get colors from the specified image")
+			return
+		}
+
+		if colors.secondary.contrast > 125 {
+			backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialDark)
+		} else {
+			backgroundVisualEffectView.effect = UIBlurEffect(style: .systemThickMaterialLight)
+		}
+
+		backgroundColor	= colors.background
+		coverBackgroundView.backgroundColor = colors.background
+		titleLabel.textColor = colors.primary
+		tagsLabel.textColor = colors.detail
+		summaryLabel.textColor = colors.secondary
 	}
 
 	private func height(forAttributedText attrString: NSAttributedString, containedIn size: CGSize) -> CGFloat {

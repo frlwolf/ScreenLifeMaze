@@ -62,23 +62,17 @@ extension ShowEpisodesDataSource: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: UITableViewCell = tableView.dequeueReusableCell(for: indexPath)
-
-		cell.selectionStyle = .none
+		let cell: ShowDetailsEpisodeCell = tableView.dequeueReusableCell(for: indexPath)
 
 		let section = sections[indexPath.section]
 		let episode = section[indexPath.row]
-		cell.textLabel?.text = episode.name
-		cell.textLabel?.adjustsFontSizeToFitWidth = true
-		cell.textLabel?.minimumScaleFactor = 0.7
+
+		cell.titleLabel.text = episode.name
 
 		if let imageURL = episode.image?.medium {
-			cell.imageView?.kf.setImage(with: imageURL) { [weak cell] _ in
-				cell?.setNeedsLayout()
-				cell?.layoutIfNeeded()
-			}
+			cell.coverImageView.kf.setImage(with: imageURL)
 		} else {
-			cell.imageView?.image = nil
+			cell.coverImageView.image = nil
 		}
 
 		return cell

@@ -70,7 +70,7 @@ final class ShowDetailsViewController: UIViewController {
 	}
 
 	private func setupSubviews() {
-		tableView.register(UITableViewCell.self)
+		tableView.register(ShowDetailsEpisodeCell.self)
 		tableView.dataSource = dataSource
 
 		view.addSubview(tableView)
