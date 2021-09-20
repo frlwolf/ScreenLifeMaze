@@ -13,7 +13,7 @@ final class ShowsViewController: UIViewController {
 	let useCase: ShowsUseCase
 	let viewModel: ShowsViewModel
 
-	weak var navigation: ShowsNavigation?
+	weak var navigation: ShowsNavigating?
 
 	private let tableView: UITableView = {
 		let tableView = UITableView()

@@ -7,10 +7,19 @@
 
 import Foundation
 
+protocol ShowDetailsNavigating: AnyObject {
+
+	func forwardTo(episode: Episode)
+
+}
+
 final class ShowDetailsCoordinator {
 
 	let index: Show.Index
 	let session: Session
+
+	private weak var navigable: Navigable?
+	private var episodeCoordinator: EpisodeCoordinator?
 
 	init(show index: Show.Index, session: Session) {
 		self.index = index
@@ -26,8 +35,24 @@ final class ShowDetailsCoordinator {
 		
 		let viewController = ShowDetailsViewController(useCase: useCase, viewModel: viewModel)
 		viewController.title = index.name
+		viewController.navigation = self
 
 		navigable.navigateTo(view: viewController)
+
+		self.navigable = navigable
+	}
+
+}
+
+extension ShowDetailsCoordinator: ShowDetailsNavigating {
+
+	func forwardTo(episode: Episode) {
+		guard let navigable = navigable else { return }
+
+		let episodeCoordinator = EpisodeCoordinator(episode: episode)
+		episodeCoordinator.start(navigable: navigable)
+
+		self.episodeCoordinator = episodeCoordinator
 	}
 
 }

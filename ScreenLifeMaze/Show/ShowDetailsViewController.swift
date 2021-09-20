@@ -14,9 +14,12 @@ final class ShowDetailsViewController: UIViewController {
 	let useCase: ShowDetailsUseCase
 	let viewModel: ShowDetailsViewModel
 
+	weak var navigation: ShowDetailsNavigating?
+
 	private let tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.translatesAutoresizingMaskIntoConstraints = false
+		tableView.estimatedRowHeight = 60
 
 		return tableView
 	}()
@@ -72,6 +75,7 @@ final class ShowDetailsViewController: UIViewController {
 	private func setupSubviews() {
 		tableView.register(ShowDetailsEpisodeCell.self)
 		tableView.dataSource = dataSource
+		tableView.delegate = self
 
 		view.addSubview(tableView)
 	}
@@ -87,9 +91,6 @@ final class ShowDetailsViewController: UIViewController {
 
 	private func updateHeader(show: Show) {
 		let horizontalWidth = tableView.frame.width - tableView.layoutMargins.right - tableView.layoutMargins.left
-		
-		print("TableView size of \(tableView.frame.size)")
-		print("Horizontal width of \(horizontalWidth)")
 		
 		coverView.update(show: show, containerViewSize: CGSize(width: horizontalWidth, height: tableView.frame.height))
 		coverView.layoutIfNeeded()
@@ -109,6 +110,18 @@ final class ShowDetailsViewController: UIViewController {
 		tableView.tableHeaderView = headerContainer
 		
 		headerContainer.layoutIfNeeded()
+	}
+
+}
+
+extension ShowDetailsViewController: UITableViewDelegate {
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: false)
+
+		let episode = dataSource.sections[indexPath.section][indexPath.row]
+
+		navigation?.forwardTo(episode: episode)
 	}
 
 }

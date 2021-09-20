@@ -19,7 +19,7 @@ final class ShowEpisodesDataSource: NSObject {
 
 	let episodesContainer: EpisodesContaining
 
-	private var sections: [[Episode]] = []
+	private(set) var sections: [[Episode]] = []
 
 	init(episodesContainer: EpisodesContaining) {
 		self.episodesContainer = episodesContainer

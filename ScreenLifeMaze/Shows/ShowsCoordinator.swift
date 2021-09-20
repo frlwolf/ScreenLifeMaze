@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ShowsNavigation: AnyObject {
+protocol ShowsNavigating: AnyObject {
 
 	func forwardTo(show: Show.Index)
 
@@ -52,7 +52,7 @@ final class ShowsCoordinator {
 
 }
 
-extension ShowsCoordinator: ShowsNavigation {
+extension ShowsCoordinator: ShowsNavigating {
 
 	func forwardTo(show: Show.Index) {
 		guard let navigationController = navigationController else { return }

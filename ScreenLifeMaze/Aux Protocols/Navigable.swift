@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol Navigable {
+protocol Navigable: AnyObject {
 
 	func navigateTo(view: View)
 

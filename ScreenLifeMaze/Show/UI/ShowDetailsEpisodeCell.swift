@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShowDetailsEpisodeCell: UITableViewCell {
+final class ShowDetailsEpisodeCell: UITableViewCell {
 
 	let coverImageView: UIImageView = {
 		let coverImageView = UIImageView()
@@ -21,7 +21,6 @@ class ShowDetailsEpisodeCell: UITableViewCell {
 		let titleLabel = UILabel()
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.font = .preferredFont(forTextStyle: .body)
-		titleLabel.numberOfLines = 2
 		titleLabel.adjustsFontSizeToFitWidth = true
 		titleLabel.minimumScaleFactor = 0.7
 
@@ -30,8 +29,6 @@ class ShowDetailsEpisodeCell: UITableViewCell {
 
 	override init(style: CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-		selectionStyle = .none
 
 		setupSubviews()
 		setupLayout()
